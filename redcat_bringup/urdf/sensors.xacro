@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" >
+
+
+    <!-- ****************************************************************************************** -->
+    <!-- ************************************ Unitree L2  ***************************************** -->
+    <!-- ****************************************************************************************** -->
+
+    <link name="unitree_l2">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://redcat_bringup/meshes/unitree_l2.STL" size="${scale_factor}"/>
+            </geometry>
+            <material name="black"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://redcat_bringup/meshes/unitree_l2.STL" size="${scale_factor}"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="unitree_l2_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="unitree_l2"/>
+        <origin xyz="0 0.1026 0.0915" rpy="0 0 0"/>
+    </joint>
+    
+</robot>

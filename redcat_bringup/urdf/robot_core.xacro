@@ -1,0 +1,152 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    
+    <material name="grey">
+        <color rgba="0.5 0.5 0.5 1"/>
+    </material>
+
+    <material name="black">
+        <color rgba="0.05 0.05 0.05 1"/>
+    </material>
+
+    <xacro:property name="scale_factor" value="0.001 0.001 0.001"/>
+
+    <!-- ****************************************************************************************** -->
+    <!-- ***************************************** Base ******************************************* -->
+    <!-- ****************************************************************************************** -->
+
+    <link name="world" />
+
+    <link name="base_link">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://redcat_bringup/meshes/base_link.STL" size="${scale_factor}"/>
+            </geometry>
+            <material name="grey"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://redcat_bringup/meshes/collision/base_link.STL" size="${scale_factor}"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="base_joint" type="fixed">
+        <parent link="world"/>
+        <child link="base_link"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+    </joint>
+
+
+    <!-- ****************************************************************************************** -->
+    <!-- ********************************* Front Left Wheel  ************************************** -->
+    <!-- ****************************************************************************************** -->
+
+    <link name="fl_wheel">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://redcat_bringup/meshes/wheel.STL" size="${scale_factor}"/>
+            </geometry>
+            <material name="black"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://redcat_bringup/meshes/collision/wheel.STL" size="${scale_factor}"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="fl_wheel_joint" type="continuous">
+        <parent link="base_link"/>
+        <child link="fl_wheel"/>
+        <origin xyz="-0.1125 0.1405 0.0121" rpy="0 -${pi/2} 0"/>
+        <axis xyz="0 0 1"/>
+    </joint>
+
+    <!-- ****************************************************************************************** -->
+    <!-- ********************************* Front Right Wheel  ************************************* -->
+    <!-- ****************************************************************************************** -->
+
+    <link name="fr_wheel">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://redcat_bringup/meshes/wheel.STL" size="${scale_factor}"/>
+            </geometry>
+            <material name="black"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://redcat_bringup/meshes/collision/wheel.STL" size="${scale_factor}"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="fr_wheel_joint" type="continuous">
+        <parent link="base_link"/>
+        <child link="fr_wheel"/>
+        <origin xyz="0.1125 0.1405 0.0121" rpy="0 ${pi/2} 0"/>
+        <axis xyz="0 0 1"/>
+    </joint>
+
+    
+    <!-- ****************************************************************************************** -->
+    <!-- ********************************* Rear Left Wheel  *************************************** -->
+    <!-- ****************************************************************************************** -->
+
+    <link name="rl_wheel">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://redcat_bringup/meshes/wheel.STL" size="${scale_factor}"/>
+            </geometry>
+            <material name="black"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://redcat_bringup/meshes/collision/wheel.STL" size="${scale_factor}"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="rl_wheel_joint" type="continuous">
+        <parent link="base_link"/>
+        <child link="rl_wheel"/>
+        <origin xyz="-0.1125 -0.1405 0.0121" rpy="0 -${pi/2} 0"/>
+        <axis xyz="0 0 1"/>
+    </joint>
+
+    <!-- ****************************************************************************************** -->
+    <!-- ********************************* Rear Right Wheel  *************************************** -->
+    <!-- ****************************************************************************************** -->
+
+    <link name="rr_wheel">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://redcat_bringup/meshes/wheel.STL" size="${scale_factor}"/>
+            </geometry>
+            <material name="black"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://redcat_bringup/meshes/collision/wheel.STL" size="${scale_factor}"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="rr_wheel_joint" type="continuous">
+        <parent link="base_link"/>
+        <child link="rr_wheel"/>
+        <origin xyz="0.1125 -0.1405 0.0121" rpy="0 ${pi/2} 0"/>
+        <axis xyz="0 0 1"/>
+    </joint>
+
+</robot>
