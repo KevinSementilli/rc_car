@@ -21,14 +21,14 @@
         <visual>
             <origin xyz="0 0 0" rpy="0 0 0"/>
             <geometry>
-                <mesh filename="package://redcat_bringup/meshes/base_link.STL" size="${scale_factor}"/>
+                <mesh filename="package://redcat_bringup/meshes/car_body.STL" size="${scale_factor}"/>
             </geometry>
             <material name="grey"/>
         </visual>
         <collision>
             <origin xyz="0 0 0" rpy="0 0 0"/>
             <geometry>
-                <mesh filename="package://redcat_bringup/meshes/collision/base_link.STL" size="${scale_factor}"/>
+                <mesh filename="package://redcat_bringup/meshes/collision/car_body.STL" size="${scale_factor}"/>
             </geometry>
         </collision>
     </link>
