@@ -21,14 +21,14 @@
         <visual>
             <origin xyz="0 0 0" rpy="0 0 0"/>
             <geometry>
-                <mesh filename="package://redcat_bringup/meshes/car_body.STL" size="${scale_factor}"/>
+                <mesh filename="package://redcat_bringup/meshes/car_body.stl" scale="${scale_factor}"/>
             </geometry>
             <material name="grey"/>
         </visual>
         <collision>
             <origin xyz="0 0 0" rpy="0 0 0"/>
             <geometry>
-                <mesh filename="package://redcat_bringup/meshes/collision/car_body.STL" size="${scale_factor}"/>
+                <mesh filename="package://redcat_bringup/meshes/collision/car_body.stl" scale="${scale_factor}"/>
             </geometry>
         </collision>
     </link>
@@ -39,78 +39,102 @@
         <origin xyz="0 0 0" rpy="0 0 0"/>
     </joint>
 
+    <!-- ****************************************************************************************** -->
+    <!-- ************************************* Steering  ****************************************** -->
+    <!-- ****************************************************************************************** -->
+
+    <link name="fl_steering_link"/> 
+    <link name="fr_steering_link"/>  
+    
+    <joint name="steering_joint" type="revolute">
+        <parent link="base_link"/>
+        <child link="fl_steering_link"/>
+        <origin xyz="-0.1125 0.1405 0.0121" rpy="0 0 0"/>
+        <axis xyz="0 0 1"/>
+        <limit lower="${-pi/6}" upper="${pi/6}" effort="1" velocity="10"/>
+    </joint>
+
+    <joint name="steering_mimic_joint" type="revolute">
+        <parent link="base_link"/>
+        <child link="fr_steering_link"/>
+        <origin xyz="0.1125 0.1405 0.0121" rpy="0 0 0"/>
+        <axis xyz="0 0 1"/>
+        <limit lower="${-pi/6}" upper="${pi/6}" effort="1" velocity="10"/>
+        <mimic joint="steering_joint" multiplier="1" offset="0"/>
+    </joint>
 
     <!-- ****************************************************************************************** -->
-    <!-- ********************************* Front Left Wheel  ************************************** -->
+    <!-- ********************************* Front Left Drive  ************************************** -->
     <!-- ****************************************************************************************** -->
 
     <link name="fl_wheel">
         <visual>
             <origin xyz="0 0 0" rpy="0 0 0"/>
             <geometry>
-                <mesh filename="package://redcat_bringup/meshes/wheel.STL" size="${scale_factor}"/>
+                <mesh filename="package://redcat_bringup/meshes/wheel.stl" scale="${scale_factor}"/>
             </geometry>
             <material name="black"/>
         </visual>
         <collision>
             <origin xyz="0 0 0" rpy="0 0 0"/>
             <geometry>
-                <mesh filename="package://redcat_bringup/meshes/collision/wheel.STL" size="${scale_factor}"/>
+                <mesh filename="package://redcat_bringup/meshes/collision/wheel.stl" scale="${scale_factor}"/>
             </geometry>
         </collision>
     </link>
 
-    <joint name="fl_wheel_joint" type="continuous">
-        <parent link="base_link"/>
+    <joint name="drive_joint" type="continuous">
+        <parent link="fl_steering_link"/>
         <child link="fl_wheel"/>
-        <origin xyz="-0.1125 0.1405 0.0121" rpy="0 -${pi/2} 0"/>
+        <origin xyz="0 0 0" rpy="0 -${pi/2} 0"/>
         <axis xyz="0 0 1"/>
     </joint>
 
     <!-- ****************************************************************************************** -->
-    <!-- ********************************* Front Right Wheel  ************************************* -->
+    <!-- ********************************* Front Right Drive  ************************************* -->
     <!-- ****************************************************************************************** -->
 
     <link name="fr_wheel">
         <visual>
             <origin xyz="0 0 0" rpy="0 0 0"/>
             <geometry>
-                <mesh filename="package://redcat_bringup/meshes/wheel.STL" size="${scale_factor}"/>
+                <mesh filename="package://redcat_bringup/meshes/wheel.stl" scale="${scale_factor}"/>
             </geometry>
             <material name="black"/>
         </visual>
         <collision>
             <origin xyz="0 0 0" rpy="0 0 0"/>
             <geometry>
-                <mesh filename="package://redcat_bringup/meshes/collision/wheel.STL" size="${scale_factor}"/>
+                <mesh filename="package://redcat_bringup/meshes/collision/wheel.stl" scale="${scale_factor}"/>
             </geometry>
         </collision>
     </link>
 
     <joint name="fr_wheel_joint" type="continuous">
-        <parent link="base_link"/>
+        <parent link="fr_steering_link"/>
         <child link="fr_wheel"/>
-        <origin xyz="0.1125 0.1405 0.0121" rpy="0 ${pi/2} 0"/>
+        <origin xyz="0 0 0" rpy="0 ${pi/2} 0"/>
         <axis xyz="0 0 1"/>
+        <mimic joint="drive_joint" multiplier="-1" offset="0"/>
     </joint>
 
     
     <!-- ****************************************************************************************** -->
-    <!-- ********************************* Rear Left Wheel  *************************************** -->
+    <!-- ********************************* Rear Left Drive  *************************************** -->
     <!-- ****************************************************************************************** -->
 
     <link name="rl_wheel">
         <visual>
             <origin xyz="0 0 0" rpy="0 0 0"/>
             <geometry>
-                <mesh filename="package://redcat_bringup/meshes/wheel.STL" size="${scale_factor}"/>
+                <mesh filename="package://redcat_bringup/meshes/wheel.stl" scale="${scale_factor}"/>
             </geometry>
             <material name="black"/>
         </visual>
         <collision>
             <origin xyz="0 0 0" rpy="0 0 0"/>
             <geometry>
-                <mesh filename="package://redcat_bringup/meshes/collision/wheel.STL" size="${scale_factor}"/>
+                <mesh filename="package://redcat_bringup/meshes/collision/wheel.stl" scale="${scale_factor}"/>
             </geometry>
         </collision>
     </link>
@@ -120,24 +144,25 @@
         <child link="rl_wheel"/>
         <origin xyz="-0.1125 -0.1405 0.0121" rpy="0 -${pi/2} 0"/>
         <axis xyz="0 0 1"/>
+        <mimic joint="drive_joint" multiplier="1" offset="0"/>
     </joint>
 
     <!-- ****************************************************************************************** -->
-    <!-- ********************************* Rear Right Wheel  *************************************** -->
+    <!-- ********************************* Rear Right Drive  *************************************** -->
     <!-- ****************************************************************************************** -->
 
     <link name="rr_wheel">
         <visual>
             <origin xyz="0 0 0" rpy="0 0 0"/>
             <geometry>
-                <mesh filename="package://redcat_bringup/meshes/wheel.STL" size="${scale_factor}"/>
+                <mesh filename="package://redcat_bringup/meshes/wheel.stl" scale="${scale_factor}"/>
             </geometry>
             <material name="black"/>
         </visual>
         <collision>
             <origin xyz="0 0 0" rpy="0 0 0"/>
             <geometry>
-                <mesh filename="package://redcat_bringup/meshes/collision/wheel.STL" size="${scale_factor}"/>
+                <mesh filename="package://redcat_bringup/meshes/collision/wheel.stl" scale="${scale_factor}"/>
             </geometry>
         </collision>
     </link>
@@ -147,6 +172,7 @@
         <child link="rr_wheel"/>
         <origin xyz="0.1125 -0.1405 0.0121" rpy="0 ${pi/2} 0"/>
         <axis xyz="0 0 1"/>
+        <mimic joint="drive_joint" multiplier="-1" offset="0"/>
     </joint>
 
 </robot>

@@ -1,0 +1,28 @@
+controller_manager:
+  ros__parameters:
+    update_rate: 100
+    # use_sim_time: true
+
+    bicycle_controller:
+      type: bicycle_steering_controller/BicycleSteeringController
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+bicycle_controller:
+  ros__parameters:
+    reference_timeout: 2.0
+    open_loop: false
+    velocity_rolling_window_size: 10
+    position_feedback: false
+    front_wheels_names: [steering_joint]
+    rear_wheels_names: [drive_joint]
+    front_wheels_state_names: [steering_joint]
+    rear_wheels_state_names: [drive_joint]
+    wheelbase: 0.281
+    front_wheel_radius: 0.115
+    rear_wheel_radius: 0.115
+    base_frame_id: base_link
+    odom_frame_id: odom
+    enable_odom_tf: true
+    use_stamped_vel: false

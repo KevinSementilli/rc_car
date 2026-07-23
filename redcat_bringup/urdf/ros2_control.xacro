@@ -20,15 +20,16 @@
                 </hardware>
             </xacro:if>
 
-            <joint name="rl_wheel_joint">
+            <joint name="drive_joint">
                 <command_interface name="velocity"/>                    
                 <state_interface name="velocity"/>
             </joint>
 
-            <joint name="fr_wheel_joint">
-                <command_interface name="velocity"/>                    
-                <state_interface name="velocity"/>
+            <joint name="steering_joint">
+                <command_interface name="position"/>
+                <state_interface name="position"/>
             </joint>
+
         </ros2_control>
     </xacro:macro>
 

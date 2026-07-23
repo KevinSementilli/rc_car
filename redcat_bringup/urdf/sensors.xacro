@@ -10,14 +10,14 @@
         <visual>
             <origin xyz="0 0 0" rpy="0 0 0"/>
             <geometry>
-                <mesh filename="package://redcat_bringup/meshes/L2_lidar.STL" size="${scale_factor}"/>
+                <mesh filename="package://redcat_bringup/meshes/L2_lidar.stl" scale="${scale_factor}"/>
             </geometry>
             <material name="black"/>
         </visual>
         <collision>
             <origin xyz="0 0 0" rpy="0 0 0"/>
             <geometry>
-                <mesh filename="package://redcat_bringup/meshes/L2_lidar.STL" size="${scale_factor}"/>
+                <mesh filename="package://redcat_bringup/meshes/L2_lidar.stl" scale="${scale_factor}"/>
             </geometry>
         </collision>
     </link>
