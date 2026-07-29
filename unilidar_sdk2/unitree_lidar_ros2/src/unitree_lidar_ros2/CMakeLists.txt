@@ -59,8 +59,8 @@ unitree_lidar_ros2_node
   DESTINATION lib/${PROJECT_NAME}
 )
 
-# install rviz file and launch file
-install(FILES rviz/view.rviz launch/launch.py
+# install rviz file and launch files
+install(DIRECTORY rviz launch
   DESTINATION share/${PROJECT_NAME}
 )
 

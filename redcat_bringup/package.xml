@@ -23,6 +23,7 @@
   <depend>slam_toolbox</depend>
   <depend>navigation2</depend>
   <depend>tf2_ros</depend>
+  <exec_depend>unitree_lidar_ros2</exec_depend>
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
