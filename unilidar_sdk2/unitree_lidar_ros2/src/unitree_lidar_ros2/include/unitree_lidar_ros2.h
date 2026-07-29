@@ -189,6 +189,16 @@ void UnitreeLidarSDKNode::timer_callback()
             imuMsg.linear_acceleration.y = imu.linear_acceleration[1];
             imuMsg.linear_acceleration.z = imu.linear_acceleration[2];
 
+            imuMsg.orientation_covariance[0] = 0.05;
+            imuMsg.orientation_covariance[4] = 0.05;
+            imuMsg.orientation_covariance[8] = 0.05;
+            imuMsg.angular_velocity_covariance[0] = 0.02;
+            imuMsg.angular_velocity_covariance[4] = 0.02;
+            imuMsg.angular_velocity_covariance[8] = 0.02;
+            imuMsg.linear_acceleration_covariance[0] = 0.10;
+            imuMsg.linear_acceleration_covariance[4] = 0.10;
+            imuMsg.linear_acceleration_covariance[8] = 0.10;
+
             pub_imu_->publish(imuMsg);
 
             // publish tf from initial imu to real-time imu

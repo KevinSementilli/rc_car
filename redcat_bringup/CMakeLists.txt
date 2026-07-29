@@ -18,6 +18,7 @@ set(THIS_PACKAGE_INCLUDE_DEPENDS
   tf2_ros
   slam_toolbox
   navigation2
+  robot_localization
 )
 
 # find dependencies
