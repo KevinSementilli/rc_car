@@ -47,72 +47,74 @@ namespace redcat {
     }
 
     hardware_interface::CallbackReturn ESPSystemHardware::on_init(
-        const hardware_interface::HardwareInfo & info) {
-        
-        if (hardware_interface::SystemInterface::on_init(info) !=
+        const hardware_interface::HardwareComponentInterfaceParams & params) {
+
+        if (hardware_interface::HardwareComponentInterface::on_init(params) !=
             hardware_interface::CallbackReturn::SUCCESS) 
         {
             RCLCPP_ERROR(logger_, "info Failed!");
             return hardware_interface::CallbackReturn::ERROR;
         }
 
-        if (info_.joints.size() < 2) {
+        const auto & info = params.hardware_info;
+
+        if (info.joints.size() < 2) {
             RCLCPP_FATAL(logger_, "Expected two joints: driver and steering");
             return hardware_interface::CallbackReturn::ERROR;
         }
 
         // Extract global hardware parameters
-        cfg_.interface_name = hardware_param_or_fallback(info_, "interface_name", "device");
+        cfg_.interface_name = hardware_param_or_fallback(info, "interface_name", "device");
         if (cfg_.interface_name.empty()) {
             RCLCPP_FATAL(logger_, "Missing required hardware parameter 'interface_name' or 'device'");
             return hardware_interface::CallbackReturn::ERROR;
         }
 
-        cfg_.baud_rate = std::stoi(info_.hardware_parameters.at("baud_rate"));
-        cfg_.timeout_ms = std::stoi(info_.hardware_parameters.at("timeout_ms"));
-        cfg_.loop_rate = std::stoi(info_.hardware_parameters.at("loop_rate"));
+        cfg_.baud_rate = std::stoi(info.hardware_parameters.at("baud_rate"));
+        cfg_.timeout_ms = std::stoi(info.hardware_parameters.at("timeout_ms"));
+        cfg_.loop_rate = std::stoi(info.hardware_parameters.at("loop_rate"));
 
-        cfg_.driver_joint_name = info_.joints[0].name;
-        cfg_.steering_joint_name = info_.joints[1].name;
+        cfg_.driver_joint_name = info.joints[0].name;
+        cfg_.steering_joint_name = info.joints[1].name;
 
         RCLCPP_INFO(logger_, "info passed successfully!");
 
         // Validate command and state interfaces for driver joint
-        if (info_.joints[0].command_interfaces.size() != 1 ||
-            info_.joints[0].command_interfaces[0].name != hardware_interface::HW_IF_VELOCITY)
+        if (info.joints[0].command_interfaces.size() != 1 ||
+            info.joints[0].command_interfaces[0].name != hardware_interface::HW_IF_VELOCITY)
         {
             RCLCPP_FATAL(
                 logger_, "Joint '%s' must have exactly 1 command interface: 'velocity'.",
-                info_.joints[0].name.c_str());
+                info.joints[0].name.c_str());
             return hardware_interface::CallbackReturn::ERROR;
         }
 
-        if (info_.joints[0].state_interfaces.size() != 2 ||
-            info_.joints[0].state_interfaces[0].name != hardware_interface::HW_IF_POSITION ||
-            info_.joints[0].state_interfaces[1].name != hardware_interface::HW_IF_VELOCITY) 
+        if (info.joints[0].state_interfaces.size() != 2 ||
+            info.joints[0].state_interfaces[0].name != hardware_interface::HW_IF_POSITION ||
+            info.joints[0].state_interfaces[1].name != hardware_interface::HW_IF_VELOCITY) 
         {
             RCLCPP_FATAL(
                 logger_, "Joint '%s' must have exactly 2 state interfaces: 'position' and 'velocity'.",
-                info_.joints[0].name.c_str());
+                info.joints[0].name.c_str());
             return hardware_interface::CallbackReturn::ERROR;
         }
 
         // Validate command and state interfaces for steering joint
-        if (info_.joints[1].command_interfaces.size() != 1 ||
-            info_.joints[1].command_interfaces[0].name != hardware_interface::HW_IF_POSITION)
+        if (info.joints[1].command_interfaces.size() != 1 ||
+            info.joints[1].command_interfaces[0].name != hardware_interface::HW_IF_POSITION)
         {
             RCLCPP_FATAL(
                 logger_, "Joint '%s' must have exactly 1 command interface: 'position'.",
-                info_.joints[1].name.c_str());
+                info.joints[1].name.c_str());
             return hardware_interface::CallbackReturn::ERROR;
         }
 
-        if (info_.joints[1].state_interfaces.size() != 1 ||
-            info_.joints[1].state_interfaces[0].name != hardware_interface::HW_IF_POSITION)
+        if (info.joints[1].state_interfaces.size() != 1 ||
+            info.joints[1].state_interfaces[0].name != hardware_interface::HW_IF_POSITION)
         {
             RCLCPP_FATAL(
                 logger_, "Joint '%s' must have exactly 1 state interface: 'position'.",
-                info_.joints[1].name.c_str());
+                info.joints[1].name.c_str());
             return hardware_interface::CallbackReturn::ERROR;
         }
         

@@ -6,7 +6,7 @@
         <ros2_control name="RCSystemHardware" type="system">
             <xacro:if value="${HW_mode == 'real'}">
                 <hardware>    
-                    <plugin>redcat_hardware/ESPSystemHardware</plugin>
+                    <plugin>redcat/ESPSystemHardware</plugin>
                     <param name="device">can0</param>
                     <param name="baud_rate">115200</param>
                     <param name="timeout_ms">5000</param>
