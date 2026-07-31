@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<library path="redcat">
+  <class name="redcat/ESPSystemHardware"
+         type="redcat::ESPSystemHardware"
+         base_class_type="hardware_interface::SystemInterface">
+    <description>
+      Made for a UART serial connection to ESP32 on redcat RC car.
+    </description>
+  </class>
+</library>
