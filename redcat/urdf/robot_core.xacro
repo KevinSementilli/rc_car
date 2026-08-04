@@ -15,7 +15,16 @@
     <!-- ***************************************** Base ******************************************* -->
     <!-- ****************************************************************************************** -->
 
-    <link name="base_link">
+    <link name="base_link"/>
+    <link name="base_footprint"/>
+
+    <joint name="base_link_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="base_footprint"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+    </joint>
+    
+    <link name="chassis">
         <visual>
             <origin xyz="0 0 0" rpy="0 0 0"/>
             <geometry>
@@ -31,6 +40,12 @@
         </collision>
     </link>
 
+    <joint name="chassis_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="chassis"/>
+        <origin xyz="0 0 0.0121" rpy="0 0 0"/>
+    </joint>
+
     <!-- ****************************************************************************************** -->
     <!-- ************************************* Steering  ****************************************** -->
     <!-- ****************************************************************************************** -->
@@ -39,7 +54,7 @@
     <link name="fr_steering_link"/>  
     
     <joint name="steering_joint" type="revolute">
-        <parent link="base_link"/>
+        <parent link="chassis"/>
         <child link="fl_steering_link"/>
         <origin xyz="-0.1125 0.1405 0.0121" rpy="0 0 0"/>
         <axis xyz="0 0 1"/>
@@ -47,7 +62,7 @@
     </joint>
 
     <joint name="steering_mimic_joint" type="revolute">
-        <parent link="base_link"/>
+        <parent link="chassis"/>
         <child link="fr_steering_link"/>
         <origin xyz="0.1125 0.1405 0.0121" rpy="0 0 0"/>
         <axis xyz="0 0 1"/>
@@ -132,7 +147,7 @@
     </link>
 
     <joint name="rl_wheel_joint" type="continuous">
-        <parent link="base_link"/>
+        <parent link="chassis"/>
         <child link="rl_wheel"/>
         <origin xyz="-0.1125 -0.1405 0.0121" rpy="0 -${pi/2} 0"/>
         <axis xyz="0 0 1"/>
@@ -160,7 +175,7 @@
     </link>
 
     <joint name="rr_wheel_joint" type="continuous">
-        <parent link="base_link"/>
+        <parent link="chassis"/>
         <child link="rr_wheel"/>
         <origin xyz="0.1125 -0.1405 0.0121" rpy="0 ${pi/2} 0"/>
         <axis xyz="0 0 1"/>
