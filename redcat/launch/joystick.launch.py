@@ -26,7 +26,7 @@ def generate_launch_description():
         name='teleop_node',
         output='screen',
         parameters=[joy_params],
-        remappings=[('/cmd_vel', '/redcat/cmd_vel_unstamped')]
+        remappings=[('/cmd_vel', '/cmd_vel_joy')]
     )
 
     return LaunchDescription([

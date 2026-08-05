@@ -46,6 +46,13 @@ namespace redcat {
         }
     }
 
+    // NOTE : this is a jazzy definition of the on_init method
+    //        for humble use the following definition instead:
+    //              hardware_interface::CallbackReturn ESPSystemHardware::on_init(
+    //              const hardware_interface::HardwareInfo & info) {  
+
+    // replace all mention of params to info
+
     hardware_interface::CallbackReturn ESPSystemHardware::on_init(
         const hardware_interface::HardwareComponentInterfaceParams & params) {
 

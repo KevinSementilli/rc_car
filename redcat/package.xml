@@ -9,22 +9,30 @@
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 
+  <!-- urdf -->
   <depend>xacro</depend>
+
+  <!-- ros2_control -->
   <depend>hardware_interface</depend>
   <depend>pluginlib</depend>
   <depend>controller_manager</depend>
-  <depend>bicycle_steering_controller</depend>
-  <depend>joint_state_broadcaster</depend>
+  <depend>ros2_controllers</depend>
   <depend>rclcpp</depend>
   <depend>rclcpp_lifecycle</depend>
-  <depend>sensor_msgs</depend>
-  <depend>geometry_msgs</depend>
-  <depend>nav_msgs</depend>
+
+  <!-- slam_toolboox and nav2 -->
   <depend>slam_toolbox</depend>
   <depend>navigation2</depend>
-  <depend>robot_localization</depend>
-  <depend>tf2_ros</depend>
+  <depend>nav2_bringup</depend>
+
+  <!-- teleoperation -->
+  <depend>twist_mux</depend>
+  <depend>joy</depend>
+  <depend>teleop_twist_joy</depend>
+
+  <!-- lidar dependencies -->
   <exec_depend>unitree_lidar_ros2</exec_depend>
+  <depend>robot_localization</depend>
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>

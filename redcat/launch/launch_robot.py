@@ -23,10 +23,6 @@ def generate_launch_description():
     local_ip = LaunchConfiguration('local_ip')
 
     use_sim_time = LaunchConfiguration('use_sim_time')
-    imu_topic = LaunchConfiguration('imu_topic')
-    base_link_frame = LaunchConfiguration('base_link_frame')
-    odom_frame = LaunchConfiguration('odom_frame')
-    world_frame = LaunchConfiguration('world_frame')
 
     # launch ros2_control_node to handle controller spawning and loading
     ros2_control = IncludeLaunchDescription(
@@ -47,16 +43,22 @@ def generate_launch_description():
         }.items(),
     )
 
+    joystick = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([os.path.join(package_path, 'launch' ,'joystick.launch.py')]),
+        launch_arguments={'use_sim_time': use_sim_time}.items(),
+    )
+
+    twist_mux_params = os.path.join(package_path, 'config', 'twist_mux.yaml')
+    twist_mux = Node(
+        package='twist_mux',
+        executable='twist_mux',
+        parameters=[twist_mux_params, {'use_sim_time': use_sim_time}],
+        remappings=[('/cmd_vel_out', '/redcat/cmd_vel_unstamped')]
+    )    
+
     localization_spawner = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            [os.path.join(package_path, 'launch', 'localization.launch.py')]),
-        launch_arguments={
-            'use_sim_time': use_sim_time,
-            'imu_topic': imu_topic,
-            'base_link_frame': base_link_frame,
-            'odom_frame': odom_frame,
-            'world_frame': world_frame,
-        }.items(),
+        PythonLaunchDescriptionSource([os.path.join(package_path, 'launch', 'unitree_localization.launch.py')]),
+        launch_arguments={'use_sim_time': use_sim_time}.items(),
     )
 
     rviz_config_file = os.path.join(package_path, 'config', 'robot.rviz')
@@ -79,13 +81,11 @@ def generate_launch_description():
         DeclareLaunchArgument('lidar_ip', default_value='192.168.0.154'),
         DeclareLaunchArgument('local_ip', default_value='192.168.0.10'),
         DeclareLaunchArgument('use_sim_time', default_value='false'),
-        DeclareLaunchArgument('imu_topic', default_value='unilidar/imu'),
-        DeclareLaunchArgument('base_link_frame', default_value='base_link'),
-        DeclareLaunchArgument('odom_frame', default_value='odom'),
-        DeclareLaunchArgument('world_frame', default_value='odom'),
 
         ros2_control,
         lidar_spawner,
+        joystick,
+        twist_mux,
         localization_spawner,
         rviz
     ])
