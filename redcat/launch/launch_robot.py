@@ -31,18 +31,6 @@ def generate_launch_description():
             launch_arguments={'HW_mode': HW_mode}.items()
     )
 
-    # launch lidar node
-    lidar_spawner = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            [os.path.join(package_path, 'launch' ,'lidar.launch.py')]), 
-        launch_arguments={
-            'initialize_type': initialize_type,
-            'work_mode': work_mode,
-            'lidar_ip': lidar_ip,
-            'local_ip': local_ip,
-        }.items(),
-    )
-
     joystick = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([os.path.join(package_path, 'launch' ,'joystick.launch.py')]),
         launch_arguments={'use_sim_time': use_sim_time}.items(),
@@ -53,8 +41,20 @@ def generate_launch_description():
         package='twist_mux',
         executable='twist_mux',
         parameters=[twist_mux_params, {'use_sim_time': use_sim_time}],
-        remappings=[('/cmd_vel_out', '/redcat/cmd_vel_unstamped')]
-    )    
+        remappings=[('/cmd_vel_out', '/bike_controller/reference')]
+    ) 
+
+    # launch lidar node
+    lidar_spawner = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            [os.path.join(package_path, 'launch' ,'lidar.launch.py')]), 
+        launch_arguments={
+            'initialize_type': initialize_type,
+            'work_mode': work_mode,
+            'lidar_ip': lidar_ip,
+            'local_ip': local_ip,
+        }.items(),
+    )   
 
     localization_spawner = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([os.path.join(package_path, 'launch', 'unitree_localization.launch.py')]),
@@ -83,9 +83,9 @@ def generate_launch_description():
         DeclareLaunchArgument('use_sim_time', default_value='false'),
 
         ros2_control,
-        lidar_spawner,
         joystick,
         twist_mux,
-        localization_spawner,
+        lidar_spawner,
+        # localization_spawner,
         rviz
     ])

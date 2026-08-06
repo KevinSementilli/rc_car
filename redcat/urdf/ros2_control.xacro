@@ -21,13 +21,17 @@
             </xacro:if>
 
             <joint name="drive_joint">
-                <command_interface name="velocity"/>                    
+                <command_interface name="velocity"/>
+                    <param name="min">-10.0</param>
+                    <param name="max">10.0</param>                  
                 <state_interface name="position"/>
                 <state_interface name="velocity"/>
             </joint>
 
             <joint name="steering_joint">
                 <command_interface name="position"/>
+                <param name="min">${-pi/6}</param>
+                <param name="max">${pi/6}</param>
                 <state_interface name="position"/>
             </joint>
 

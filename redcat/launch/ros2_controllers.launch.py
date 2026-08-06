@@ -33,7 +33,9 @@ def generate_launch_description():
         package="controller_manager",
         executable="ros2_control_node",
         parameters=[controller_config],
-        remappings=[("/controller_manager/robot_description", "robot_description")],
+        remappings=[
+            ("/controller_manager/robot_description", "robot_description"),
+        ],
         output="screen",
     )
 
@@ -45,7 +47,7 @@ def generate_launch_description():
     bicycle_controller_spawner = Node(
         package="controller_manager",
         executable="spawner",
-        arguments=["bicycle_controller"],
+        arguments=["bike_controller"],
         output="screen",
     )
 

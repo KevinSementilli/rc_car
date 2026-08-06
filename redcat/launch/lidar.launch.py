@@ -31,7 +31,7 @@ def generate_launch_description():
         package='tf2_ros',
         executable='static_transform_publisher',
         name='unilidar_imu_initial_tf',
-        arguments=['0', '0.1026', '0.0915', '0', '0', '0', 'base_link', 'unilidar_imu_initial'],
+        arguments=['0', '0.1026', '0.0915', '0', '0', '0', 'chassis', 'unilidar_imu_initial'],
         output='screen',
     )
 

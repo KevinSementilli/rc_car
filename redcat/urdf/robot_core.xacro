@@ -23,6 +23,12 @@
         <child link="base_footprint"/>
         <origin xyz="0 0 0" rpy="0 0 0"/>
     </joint>
+
+    <joint name="chassis_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="chassis"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+    </joint>
     
     <link name="chassis">
         <visual>
@@ -39,12 +45,6 @@
             </geometry>
         </collision>
     </link>
-
-    <joint name="chassis_joint" type="fixed">
-        <parent link="base_link"/>
-        <child link="chassis"/>
-        <origin xyz="0 0 0.0121" rpy="0 0 0"/>
-    </joint>
 
     <!-- ****************************************************************************************** -->
     <!-- ************************************* Steering  ****************************************** -->
