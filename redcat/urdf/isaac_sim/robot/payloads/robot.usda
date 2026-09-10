@@ -1,0 +1,118 @@
+#usda 1.0
+(
+    customLayerData = {
+        string creator = "URDF USD Converter v0.1.3"
+    }
+    defaultPrim = "redcat_car"
+    doc = """Generated from Composed Stage of root layer /tmp/tmp61d51w36/redcat_car.usdc
+
+
+Generated from Composed Stage of root layer /tmp/urdf_import_robot_l93qfz4j/usdex_robot/redcat_car.usdc
+
+
+Generated from Composed Stage of root layer /tmp/urdf_import_robot_l93qfz4j/temp_robot/robot.usd
+"""
+    kilogramsPerUnit = 1
+    metersPerUnit = 1
+    upAxis = "Z"
+)
+
+over "redcat_car" (
+    prepend apiSchemas = ["IsaacRobotAPI"]
+)
+{
+    prepend rel isaac:physics:robotJoints = [
+        </redcat_car/Physics/fl_wheel_joint>,
+        </redcat_car/Physics/fr_wheel_joint>,
+        </redcat_car/Physics/rl_wheel_joint>,
+        </redcat_car/Physics/rr_wheel_joint>,
+        </redcat_car/Physics/unitree_L2_joint>,
+    ]
+    prepend rel isaac:physics:robotLinks = [
+        </redcat_car/Geometry/base_link/base_footprint/chassis>,
+        </redcat_car/Geometry/base_link/base_footprint/chassis/fl_wheel>,
+        </redcat_car/Geometry/base_link/base_footprint/chassis/fr_wheel>,
+        </redcat_car/Geometry/base_link/base_footprint/chassis/rl_wheel>,
+        </redcat_car/Geometry/base_link/base_footprint/chassis/rr_wheel>,
+        </redcat_car/Geometry/base_link/base_footprint/chassis/unitree_L2>,
+    ]
+    token isaac:robotType = "Wheeled"
+
+    over "Geometry"
+    {
+        over "base_link"
+        {
+            over "base_footprint"
+            {
+                over "chassis" (
+                    prepend apiSchemas = ["IsaacLinkAPI"]
+                )
+                {
+                    over "fl_wheel" (
+                        prepend apiSchemas = ["IsaacLinkAPI"]
+                    )
+                    {
+                    }
+
+                    over "fr_wheel" (
+                        prepend apiSchemas = ["IsaacLinkAPI"]
+                    )
+                    {
+                    }
+
+                    over "rl_wheel" (
+                        prepend apiSchemas = ["IsaacLinkAPI"]
+                    )
+                    {
+                    }
+
+                    over "rr_wheel" (
+                        prepend apiSchemas = ["IsaacLinkAPI"]
+                    )
+                    {
+                    }
+
+                    over "unitree_L2" (
+                        prepend apiSchemas = ["IsaacLinkAPI"]
+                    )
+                    {
+                    }
+                }
+            }
+        }
+    }
+
+    over "Physics"
+    {
+        over "fl_wheel_joint" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+        }
+
+        over "fr_wheel_joint" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+        }
+
+        over "rl_wheel_joint" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+        }
+
+        over "rr_wheel_joint" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+        }
+
+        over "unitree_L2_joint" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+        }
+    }
+}
+

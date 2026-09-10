@@ -3,7 +3,7 @@
 
     <xacro:arg name="HW_mode" default="mock"/>
 
-    <xacro:include filename="robot_core.xacro"/>
+    <xacro:include filename="robot_core_diff.xacro"/>
     <xacro:include filename="sensors.xacro"/>
     
     <xacro:include filename="ros2_control.xacro"/>

@@ -6,22 +6,44 @@ joy_node:
 
 teleop_node:
   ros__parameters:
-    publish_stamped_twist: true
+    publish_stamped_twist: false
     axis_linear:
       x: 1
     scale_linear: 
-      x: 0.5
+      x: 2.0
     scale_linear_turbo: 
-      x: 1.0
+      x: 4.0
 
     axis_angular:
-      yaw: 3
+      yaw: 2
     scale_angular: 
-      yaw: 0.5
+      yaw: 20.0
     scale_angular_turbo: 
-      yaw: 1.0
+      yaw: 40.0
 
-    enable_button: 4
-    enable_turbo_button: 5
+    enable_button: 6
+    enable_turbo_button: 7
 
     require_enable_button: true
+
+# teleop_node:
+#   ros__parameters:
+#     publish_stamped_twist: false
+#     axis_linear:
+#       x: 1
+#     scale_linear: 
+#       x: 5.0
+#     scale_linear_turbo: 
+#       x: 10.0
+
+#     axis_angular:
+#       yaw: 3
+#     scale_angular: 
+#       yaw: 20.0
+#     scale_angular_turbo: 
+#       yaw: 40.0
+
+#     enable_button: 4
+#     enable_turbo_button: 5
+
+#     require_enable_button: true
