@@ -12,7 +12,7 @@ def generate_launch_description():
     
     package_name = 'redcat'
     config_file = os.path.join(
-        get_package_share_directory(package_name), 'config', 'localization.yaml'
+        get_package_share_directory(package_name), 'config', 'nav', 'localization.yaml'
     )
 
     launch_arguments = [

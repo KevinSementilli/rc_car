@@ -36,7 +36,7 @@ def generate_launch_description():
         launch_arguments={'use_sim_time': use_sim_time}.items(),
     )
 
-    twist_mux_params = os.path.join(package_path, 'config', 'twist_mux.yaml')
+    twist_mux_params = os.path.join(package_path, 'config', 'nav', 'twist_mux.yaml')
     twist_mux = Node(
         package='twist_mux',
         executable='twist_mux',
@@ -61,7 +61,7 @@ def generate_launch_description():
         launch_arguments={'use_sim_time': use_sim_time}.items(),
     )
 
-    rviz_config_file = os.path.join(package_path, 'config', 'robot.rviz')
+    rviz_config_file = os.path.join(package_path, 'config', 'rviz', 'robot.rviz')
 
     rviz = Node(
         package='rviz2',

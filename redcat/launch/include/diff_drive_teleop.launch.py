@@ -23,7 +23,7 @@ def generate_launch_description():
             launch_arguments={'HW_mode': HW_mode}.items()
     )
 
-    controller_config = os.path.join(package_path, 'config', 'ros2_controllers_diff_drive.yaml')
+    controller_config = os.path.join(package_path, 'config', 'ros2_control', 'ros2_controllers_diff_drive.yaml')
 
     # run the ros2_control_node to handle controller spawning and loading.
     # remap topic to /robot_description, and diff_drive_controller's own /cmd_vel straight onto

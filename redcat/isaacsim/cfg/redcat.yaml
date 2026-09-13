@@ -1,16 +1,17 @@
 isaacsim:
   robot:
+    # Relative to the ros2 package root (i.e. redcat/ )
+    usd_relative_path: isaacsim/usd/redcat.usd
     prim_path: /World/Robot
-    # Relative to the package root (redcat/, i.e. isaacsim/'s parent -- re-run the URDF importer
-    # to (re)create this file).
-    usd_relative_path: urdf/isaac_sim/redcat.usd
+    # Relative to prim_path
+    articulation_root_path: Geometry/base_link/base_footprint/chassis
 
   environment:
     # Relative to the Isaac Sim assets root. Empty string for a bare ground plane.
     usd: /Isaac/Environments/Simple_Warehouse/full_warehouse.usd
 
   lidar:
-    type: Example_Rotary
+    type: Example_Rotary_2D
     # Relative to the robot prim path.
     mount_path: Geometry/base_link/base_footprint/chassis/unitree_L2/RTXLidar
     frame_id: unitree_L2
@@ -19,7 +20,7 @@ isaacsim:
     translation: [0.0, 0.0, 0.01]
     # Degrees above horizontal: 90 = horizontal, 0 = straight up. Real Unitree L2 sweeps from
     # its horizontal plane upward, so [90, 0] here (start-to-end order, not min/max).
-    elevation_range_deg: [90.0, 0.0]
+    elevation_range_deg: [0.0, 90.0]
     # Angular spacing (degrees) between elevation planes. null keeps the config's native
     # channel count, just rescaled into elevation_range_deg.
     elevation_step_deg: null
@@ -29,17 +30,25 @@ isaacsim:
     wheel_joint_names: [fl_wheel_joint, fr_wheel_joint, rl_wheel_joint, rr_wheel_joint]
     left_joint_names: [fl_wheel_joint, rl_wheel_joint]
     right_joint_names: [fr_wheel_joint, rr_wheel_joint]
-    # Matches config/ros2_control/ros2_controllers_diff_drive.yaml (only the turn-mixing shape
-    # carries over -- /cmd_vel is treated as throttle, not physical m/s/rad/s; see
-    # diff_drive_bridge.DiffDriveMixer).
     wheel_separation: 0.225
     max_wheel_velocity: 50.0
     damping: 5.0
     max_effort: 8.0
 
+  joint_state_bridge:
+    joint_states_topic: joint_states
+    # odom -> base_link on /tf, driven from the articulation's own pose (needed for rviz2 to show
+    # the robot moving -- robot_state_publisher only publishes the *internal* tree below
+    # base_frame_id). odom is left as the tree's root: with no nav stack running, rviz2's Fixed
+    # Frame is odom directly; with slam_toolbox/nav2 running, they publish map -> odom themselves.
+    publish_odom: true
+    odom_topic: odom
+    tf_topic: tf
+    base_frame_id: base_link
+    odom_frame_id: odom
+
   teleop:
-    # none | joystick | keyboard
-    mode: none
+    mode: none # none | joystick | keyboard
     joy_device_id: null
     topic: /cmd_vel
     # null resolves to <redcat package share dir>/config/joystick.yaml.

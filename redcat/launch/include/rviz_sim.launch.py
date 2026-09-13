@@ -19,7 +19,7 @@ def generate_launch_description():
     # Include rsp.launch.py
     rsp = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(os.path.join(
-            get_package_share_directory(package_name), 'launch', 'rsp.launch.py')),
+            get_package_share_directory(package_name), 'launch', 'include', 'rsp.launch.py')),
         launch_arguments={'HW_mode' : HW_mode}.items()  
     )
 
@@ -32,7 +32,7 @@ def generate_launch_description():
     )
 
     rviz_config_file = os.path.join(
-        get_package_share_directory(package_name), 'config', 'view_robot.rviz'
+        get_package_share_directory(package_name), 'config', 'rviz', 'view_robot.rviz'
     )
 
     node_rviz = Node(

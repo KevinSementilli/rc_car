@@ -27,8 +27,9 @@ Run via Isaac Sim's own Python, with ROS 2 sourced:
     /home/legion5/IsaacSim/python.sh \\
         /home/legion5/ros2_ws/src/rc_car/redcat/isaacsim/src/launch_redcat_isaacsim.py
 
-rviz2: Fixed Frame = the lidar's frame_id (no odom/TF is published here); add a PointCloud2 or
-LaserScan display on /point_cloud or /scan, matching the configured lidar type.
+rviz2: Fixed Frame = "odom" (or "map", once slam_toolbox/nav2 is running); add a RobotModel
+display (needs robot_state_publisher running off /joint_states) and a PointCloud2 or LaserScan
+display on /point_cloud or /scan, matching the configured lidar type.
 """
 
 import argparse
@@ -74,6 +75,7 @@ from isaacsim.storage.native import get_assets_root_path
 # include/ modules -- only importable now, since they import carb/isaacsim internally.
 from rtx_lidar_bridge import RtxLidarBridge
 from diff_drive_bridge import DiffDriveRobot, TeleopProcessManager, TwistSubscriber
+from joint_state_bridge import JointStateBridge
 
 # Enable the ROS 2 bridge so the RtxLidar*ROS2Publish* writers are available.
 app_utils.enable_extension("isaacsim.ros2.bridge")
@@ -112,6 +114,25 @@ lidar = RtxLidarBridge(
 )
 lidar.create()
 
+# Build the /joint_states + TF bridge so robot_state_publisher can generate the robot's TF tree
+# and rviz2 can see it move (odom -> base_link, driven off the articulation's own pose; odom is
+# left as the tree's root, for slam_toolbox/nav2 to publish map -> odom on top of when running).
+# Needs the exact PhysicsArticulationRootAPI prim (robot_prim_path itself is just the reference
+# Xform) -- unlike DiffDriveRobot's Articulation wrapper, the physx tensor view this bridge's
+# OmniGraph nodes query doesn't resolve a nested articulation root on its own.
+jsb_cfg = cfg.get("joint_state_bridge", {})
+articulation_root_path = f"{robot_prim_path}/{cfg['robot']['articulation_root_path']}"
+joint_state_bridge = JointStateBridge(
+    articulation_root_path,
+    base_frame_id=jsb_cfg.get("base_frame_id", "base_link"),
+    odom_frame_id=jsb_cfg.get("odom_frame_id", "odom"),
+    joint_states_topic=jsb_cfg.get("joint_states_topic", "joint_states"),
+    odom_topic=jsb_cfg.get("odom_topic", "odom"),
+    tf_topic=jsb_cfg.get("tf_topic", "tf"),
+    publish_odom=jsb_cfg.get("publish_odom", True),
+)
+joint_state_bridge.create()
+
 SimulationManager.setup_simulation(dt=1.0 / 60.0, device="cpu")
 simulation_app.update()
 
@@ -135,6 +156,7 @@ robot = DiffDriveRobot(
 )
 
 lidar.describe()
+joint_state_bridge.describe()
 
 # Optionally start a /cmd_vel publisher ourselves instead of running one in another terminal.
 teleop_cfg = cfg["teleop"]

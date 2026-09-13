@@ -1,0 +1,132 @@
+#usda 1.0
+(
+    customLayerData = {
+        string creator = "URDF USD Converter v0.1.3"
+    }
+    doc = """Generated from Composed Stage of root layer /tmp/tmp61d51w36/redcat_car.usdc
+
+
+Generated from Composed Stage of root layer /tmp/urdf_import_robot_l93qfz4j/usdex_robot/redcat_car.usdc
+
+
+Generated from Composed Stage of root layer /tmp/urdf_import_robot_l93qfz4j/temp_robot/robot.usd
+
+
+Generated from Composed Stage of root layer /home/legion5/ros2_ws/src/rc_car/redcat/urdf/isaac_sim/robot/payloads/base.usd
+"""
+    kilogramsPerUnit = 1
+    metersPerUnit = 1
+    upAxis = "Z"
+)
+
+def Scope "Instances"
+{
+    def Xform "car_body" (
+        prepend references = @./geometries.usd@</Geometries/car_body>
+    )
+    {
+        over "car_body" (
+            apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            custom rel material:binding
+            prepend rel material:binding = </Instances/car_body/VisualMaterials/grey>
+        }
+
+        def Scope "VisualMaterials"
+        {
+            def Material "grey" (
+                instanceable = true
+                prepend references = @./materials.usda@</Materials/grey>
+            )
+            {
+            }
+        }
+    }
+
+    def Xform "wheel" (
+        prepend references = @./geometries.usd@</Geometries/wheel>
+    )
+    {
+        over "wheel" (
+            apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            custom rel material:binding
+            prepend rel material:binding = </Instances/wheel/VisualMaterials/black>
+        }
+
+        def Scope "VisualMaterials"
+        {
+            def Material "black" (
+                instanceable = true
+                prepend references = @./materials.usda@</Materials/black>
+            )
+            {
+            }
+        }
+    }
+
+    def Xform "wheel_1" (
+        prepend references = @./geometries.usd@</Geometries/wheel_1>
+    )
+    {
+        over "wheel_1" (
+            apiSchemas = ["PhysicsCollisionAPI", "NewtonCollisionAPI", "PhysicsMeshCollisionAPI", "NewtonMeshCollisionAPI"]
+        )
+        {
+            token physics:approximation = "convexHull"
+            token purpose = "guide"
+        }
+    }
+
+    def Xform "L2_lidar" (
+        prepend references = @./geometries.usd@</Geometries/L2_lidar>
+    )
+    {
+        over "L2_lidar" (
+            apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            custom rel material:binding
+            prepend rel material:binding = </Instances/L2_lidar/VisualMaterials/black>
+        }
+
+        def Scope "VisualMaterials"
+        {
+            def Material "black" (
+                instanceable = true
+                prepend references = @./materials.usda@</Materials/black>
+            )
+            {
+            }
+        }
+    }
+
+    def Xform "L2_lidar_1" (
+        prepend references = @./geometries.usd@</Geometries/L2_lidar>
+    )
+    {
+        over "L2_lidar" (
+            apiSchemas = ["PhysicsCollisionAPI", "NewtonCollisionAPI", "PhysicsMeshCollisionAPI", "NewtonMeshCollisionAPI"]
+        )
+        {
+            token physics:approximation = "convexHull"
+            token purpose = "guide"
+        }
+    }
+
+    def Xform "car_body_1" (
+        prepend references = @./geometries.usd@</Geometries/car_body_1>
+    )
+    {
+        over "car_body_1" (
+            apiSchemas = ["PhysicsCollisionAPI", "NewtonCollisionAPI", "PhysicsMeshCollisionAPI", "NewtonMeshCollisionAPI"]
+        )
+        {
+            token physics:approximation = "convexHull"
+            token purpose = "guide"
+        }
+    }
+}
+

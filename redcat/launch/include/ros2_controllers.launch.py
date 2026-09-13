@@ -24,7 +24,7 @@ def generate_launch_description():
     )
 
     controller_config = os.path.join(
-        get_package_share_directory(package_name), 'config', 'ros2_controllers.yaml'
+        get_package_share_directory(package_name), 'config', 'ros2_control', 'ros2_controllers.yaml'
     )
 
     # run the ros2_control_node to handle controller spawning and loading

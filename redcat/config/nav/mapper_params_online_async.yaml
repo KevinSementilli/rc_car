@@ -14,15 +14,15 @@ slam_toolbox:
     map_frame: map
     base_frame: base_footprint
     scan_topic: /scan
-    use_map_saver: true
-    mode: mapping #localization
+    # use_map_saver: true
+    mode: mapping # localization 
 
     # if you'd like to immediately start continuing a map at a given pose
     # or at the dock, but they are mutually exclusive, if pose is given
     # will use pose
-    #map_file_name: test_steve
+    # map_file_name: /home/legion5/ros2_ws/src/rc_car/redcat/maps/example_warehouse
     # map_start_pose: [0.0, 0.0, 0.0]
-    #map_start_at_dock: true
+    # map_start_at_dock: true 
 
     debug_logging: false
     throttle_scans: 1
